@@ -1,0 +1,32 @@
+package selfLearning;
+//继承下，new子类对象时编译器会先调用Object构造器，然后是父类构造器。而此时如果父类构造器里的方法被子类重写的话，引用型参数会被报空指针错!!!
+class Base
+{
+//	public String nam = "12345";
+//	public int cba = 5;
+	public Base()
+	{
+		System.out.println("先调用父类！！！！！！！！！！！！！！！！！！！");
+		test();
+	}
+	public void test()
+	{
+		System.out.println("将被子类重写的方法!!!");
+	}
+}
+public class Sub extends Base {
+	
+	public static String name = "12345";//不加final或者static会引发空指针异常,思考一下为什么！！！
+	public int cba = 5;
+	public void test()//注意:子类重写父类方法，访问控制符修饰的此方法的可见范围子类要大于等于父类
+	{
+		System.out.println("子类重写的方法!!! name's length is " + name.length() +", cba = " + cba);
+	}
+	
+	public static void main(String[] args)
+	{
+		Base a999 = new Sub();//子类类型 可以 赋值给 父类类型(类型强转)， 但是父类类型不能强制转换成子类类型
+		StaticTest.In a12 = new StaticTest.In();
+		
+	}
+}
