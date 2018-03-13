@@ -4,8 +4,13 @@ package InterfaceTest;
 public class StsticInnerClass
 {
 	
-	private class inner//非静态内部类
+	private class inner//非静态内部类 
 	{
+		//!!!不允许在非静态内部类里定义静态成员!!! 包括静态成员变量、静态方法、静态初始化块!!! 下面三个都会引发编译错误!!!
+//		static { System.out.println("此为静态初始化块..."); }
+//		private static int intProp;
+//		private static void testIn() { }
+		
 		public void fun()
 		{
 			System.out.println("\n非静态内部类里的方法...");
