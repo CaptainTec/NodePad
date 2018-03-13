@@ -3,6 +3,7 @@ package InterfaceTest;
  * 测试面向接口编程!!!!
  * @author CaptainT
  * @time 2018.03.13
+ * 接口类型做形参，将某方法的行为推迟到执行该方法时才确定(实质是传进什么样的实现类方法，就执行该实现类下面的方法！！！)
  */
 interface Command
 {
