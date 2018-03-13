@@ -1,0 +1,31 @@
+package InterfaceTest;
+//main()静态方法里不能new非静态的内部类!!! , 但可以new外部类!!! 
+//非静态的内部类一般是在外部类的普通方法里new, 然后new的外部对象调用外部类的此方法时就会new非静态内部类
+public class StsticInnerClass
+{
+	
+	private class inner//非静态内部类
+	{
+		public void fun()
+		{
+			System.out.println("\n非静态内部类里的方法...");
+		}
+	}
+	
+	public void testInnerClass()
+	{
+		System.out.println("非静态的内部类不能在 外部类的静态成员mian()方法里调用,可以通过外部类调用!!! 见main()方法里的语句!");
+		new inner().fun();//先创建内部类的实例对象，然后通过此对象调用内部类里的方法
+	}
+	
+	public static void main(String[] args)
+	{
+//		inner in = new inner();//静态的成员main()方法不能调用得非静态的内部类，此语句会编译错误!!!
+		StsticInnerClass out = new StsticInnerClass();
+		//非静态内部类只能由外部类的实例对象new, 既可以直接由外部实例对象new, 也可以通过外部势力对象的方法new
+		inner iii = out.new inner();//直接new
+		iii.fun();//(1)
+		out.new inner().fun();//(2)
+		out.testInnerClass();//间接new
+	}
+}
