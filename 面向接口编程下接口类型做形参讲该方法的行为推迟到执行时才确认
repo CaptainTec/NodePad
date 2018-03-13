@@ -1,0 +1,51 @@
+package InterfaceTest;
+/*
+ * 测试面向接口编程!!!!
+ * @author CaptainT
+ * @time 2018.03.13
+ */
+interface Command
+{
+	//接口里定义的process抽象方法用于封装  处理行为
+	void process(int[] tar);//省略了public static
+}
+
+public class ObjectInterfaceProgramming
+{
+	public void ordinary(int[] tar, Command cmd)//ObjectInterfaceProgramming类里的 普通方法ordinary
+	{//此方法的第二个参数是Command接口类型的参数，由于下面的PrintCommand类 和 AddCommand类 实现了此接口，
+	 //则这两个实现类的实例对象可以直接赋值给Command类型的变量!!!
+		
+		cmd.process(tar);//方法体里又调用Command里的 抽象方法precess
+	}
+	
+	public static void main(String[] args)
+	{
+		ObjectInterfaceProgramming pa = new ObjectInterfaceProgramming();//调用系统默认构造器
+		int[] target = {1,2,3,4,5,666};
+		pa.ordinary(target, new PrintCommand());//第二个参数传进来PrintCommand类型的实例对象，转换成Command接口类型的对象
+		System.out.println("----------------------");
+		pa.ordinary(target, new AddCommand());
+	}
+}
+
+//下面的这两个类均实现(类比于子类继承父类)了Command接口(里的抽象方法)!!!
+class PrintCommand implements Command
+{
+	public void process(int[] t)
+	{
+		for(int tmp : t)
+			System.out.println("迭代输出目标数组的元素 : " + tmp);
+	}
+}
+
+class AddCommand implements Command
+{
+	public void process(int[] tar)
+	{
+		int sum = 0;
+		for(int tmp : tar)
+			sum += tmp;
+		System.out.println("数组元素的总和是 : " + sum);
+	}
+}
