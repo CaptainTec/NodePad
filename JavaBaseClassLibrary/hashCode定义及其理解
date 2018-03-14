@@ -1,0 +1,126 @@
+package JavaBaseClassLibrary;
+
+class nullPointerTest
+{
+	private String pointer;
+	void p()
+	{
+		System.out.println(pointer);
+	}
+}
+
+public class hashCodeTest
+{
+	private int a;
+	private double b;
+	private String c;
+	
+	public static void main(String[] args)
+	{
+		System.out.println(new hashCodeTest().hashCode());
+		System.out.println(new hashCodeTest().hashCode());
+		/*上面两行，如果定义hashCodeTest类的equals()方法返回true的要求是 a,b,c里存储的变量相等，这样就必须重写hashCode()方法
+		 *因为hashCode()定义中有一条就是若equals()返回true，则hashCode()返回的结果得相等。所以一般重写equals的话也要重写hashCode()方法
+		 *http://blog.csdn.net/zhangyuan19880606/article/details/51240372
+		 */
+		
+		new nullPointerTest().p();//默认为null，不会报错空指针。 想一想为什么？
+	}
+}
+/*
+HashCode
+
+然后讲下什么是HashCode，总结几个关键点：
+
+1、HashCode的存在主要是为了查找的快捷性，HashCode是用来在散列存储结构中确定对象的存储地址的
+
+2、如果两个对象equals相等，那么这两个对象的HashCode一定也相同
+
+3、如果对象的equals方法被重写，那么对象的HashCode方法也尽量重写
+
+4、如果两个对象的HashCode相同，不代表两个对象就相同，只能说明这两个对象在散列存储结构中，存放于同一个位置
+
+HashCode有什么用
+
+回到最关键的问题，HashCode有什么用？不妨举个例子：
+
+1、假设内存中有0 1 2 3 4 5 6 7 8这8个位置，如果我有个字段叫做ID，那么我要把这个字段存放在以上8个位置之一，如果不用HashCode而任意存放，那么当查找时就需要到8个位置中去挨个查找
+
+2、使用HashCode则效率会快很多，把ID的HashCode%8，然后把ID存放在取得余数的那个位置，然后每次查找该类的时候都可以通过ID的HashCode%8求余数直接找到存放的位置了
+
+3、如果ID的HashCode%8算出来的位置上本身已经有数据了怎么办？这就取决于算法的实现了，比如ThreadLocal中的做法就是从算出来的位置向后查找第一个为空的位置，放置数据；HashMap的做法就是通过链式结构连起来。反正，只要保证放的时候和取的时候的算法一致就行了。
+
+4、如果ID的HashCode%8相等怎么办（这种对应的是第三点说的链式结构的场景）？这时候就需要定义equals了。先通过HashCode%8来判断类在哪一个位置，再通过equals来在这个位置上寻找需要的类。对比两个类的时候也差不多，先通过HashCode比较，假如HashCode相等再判断equals。如果两个类的HashCode都不相同，那么这两个类必定是不同的。
+
+举个实际的例子Set。我们知道Set里面的元素是不可以重复的，那么如何做到？Set是根据equals()方法来判断两个元素是否相等的。比方说Set里面已经有1000个元素了，那么第1001个元素进来的时候，最多可能调用1000次equals方法，如果equals方法写得复杂，对比的东西特别多，那么效率会大大降低。使用HashCode就不一样了，比方说HashSet，底层是基于HashMap实现的，先通过HashCode取一个模，这样一下子就固定到某个位置了，如果这个位置上没有元素，那么就可以肯定HashSet中必定没有和新添加的元素equals的元素，就可以直接存放了，都不需要比较；如果这个位置上有元素了，逐一比较，比较的时候先比较HashCode，HashCode都不同接下去都不用比了，肯定不一样，HashCode相等，再equals比较，没有相同的元素就存，有相同的元素就不存。如果原来的Set里面有相同的元素，只要HashCode的生成方式定义得好（不重复），不管Set里面原来有多少元素，只需要执行一次的equals就可以了。这样一来，实际调用equals方法的次数大大降低，提高了效率。
+
+为什么重写Object的equals(Object obj)方法尽量要重写Object的hashCode()方法
+
+我们在重写Object的equals(Object obj)方法的时候，应该尽量重写hashCode()方法，这是有原因的，下面详细解释下：
+
+复制代码
+ 1 public class HashCodeClass
+ 2 {
+ 3     private String str0;
+ 4     private double dou0;
+ 5     private int       int0;
+ 6     
+ 7     public boolean equals(Object obj)
+ 8     {
+ 9         if (obj instanceof HashCodeClass)
+10         {
+11             HashCodeClass hcc = (HashCodeClass)obj;
+12             if (hcc.str0.equals(this.str0) && 
+13                 hcc.dou0 == this.dou0 &&
+14                 hcc.int0 == this.int0)
+15             {
+16                 return true;
+17             }
+18             return false;
+19         }
+20         return false;
+21     }
+22 }
+复制代码
+复制代码
+ 1 public class TestMain
+ 2 {
+ 3     public static void main(String[] args)
+ 4     {
+ 5         System.out.println(new HashCodeClass().hashCode());
+ 6         System.out.println(new HashCodeClass().hashCode());
+ 7         System.out.println(new HashCodeClass().hashCode());
+ 8         System.out.println(new HashCodeClass().hashCode());
+ 9         System.out.println(new HashCodeClass().hashCode());
+10         System.out.println(new HashCodeClass().hashCode());
+11     }
+12 }
+复制代码
+打印出来的值是：
+
+1901116749
+1807500377
+355165777
+1414159026
+1569228633
+778966024
+我们希望两个HashCodeClass类equals的前提是两个HashCodeClass的str0、dou0、int0分别相等。OK，那么这个类不重写hashCode()方法是有问题的。
+
+现在我的HashCodeClass都没有赋初值，那么这6个HashCodeClass应该是全部equals的。如果以HashSet为例，HashSet内部的HashMap的table本身的大小是16，那么6个HashCode对16取模分别为13、9、1、2、9、8。第一个放入table[13]的位置、第二个放入table[9]的位置、第三个放入table[1]的位置。。。但是明明是全部equals的6个HashCodeClass，怎么能这么做呢？HashSet本身要求的就是equals的对象不重复，现在6个equals的对象在集合中却有5份（因为有两个计算出来的模都是9）。
+
+那么我们该怎么做呢？重写hashCode方法，根据str0、dou0、int0搞一个算法生成一个尽量唯一的hashCode，这样就保证了str0、dou0、int0都相等的两个HashCodeClass它们的HashCode是相等的，这就是重写equals方法必须尽量要重写hashCode方法的原因。看下JDK中的一些类，都有这么做：
+
+Integer的
+
+复制代码
+ 1 public int hashCode() {
+ 2     return value;
+ 3     }
+ 4 
+ 5 public boolean equals(Object obj) {
+ 6     if (obj instanceof Integer) {
+ 7         return value == ((Integer)obj).intValue();
+ 8     }
+ 9     return false;
+10     }
+*/
