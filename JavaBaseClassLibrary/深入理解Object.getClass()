@@ -1,0 +1,58 @@
+package JavaBaseClassLibrary;
+
+public class getClassTest
+{
+	public static void main(String[] args)
+	{
+		getClassTest gc = new getClassTest();
+		System.out.println("" + gc.getClass());//gc的类 类型
+		
+		Integer i = new Integer(5);
+		System.out.println("" + i.getClass());
+	}
+}
+/*
+ 返回如下:
+class JavaBaseClassLibrary.getClassTest
+class java.lang.Integer
+*/
+/*
+java Obj getClass
+    
+    所谓反射，可以理解为在运行时期获取对象类型信息的操作。 
+    传统的编程方法要求程序员在编译阶段决定使用的类型，但是在反射的帮助下，编程人员可以动态获取这些信息，从而编写更加具有可移植性的代码。 
+
+    类型类指的是代表一个类型的类.因为一切皆是对象，类型也不例外，在Java使用类型类来表示一个类型。所有的类型类都是Class类的实例。 
+    在Java中一切都是对象，我们一般所使用的对象都直接或间接继承自Object类。Object类中包含一个方法名叫getClass，利用这个方法就可以获得一个实例的类型类。 
+
+Java代码  收藏代码
+A a = new A();  
+if(a.getClass()==A.class){  
+   System.out.println("equal");  
+}else{  
+   System.out.println("unequal");  
+}   
+
+结果就是打印出 “equal”。 
+
+
+    对象a是A的一个实例，A某一个类，a.getClass()返回的结果正是A的类型类， 
+    在Java中表示一个特定类型的类型类可以用“类型.class”的方式获得 
+    因为a.getClass()获得是A的类型类，也就是A.class，因此上面的代码执行的结果就是打印出 “equal”。 
+
+    特别注意的是，类型类是一一对应的，父类的类型类和子类的类型类是不同的 
+    因此，如果你知道一个实例，那么你可以通过实例的“getClass()”方法获得该对象的类型类，如果你知道一个类型，那么你可以使用“.class”的方法获得该类型的类型类。 
+
+在获得类型类之后，你就可以调用其中的一些方法获得类型的信息了，主要的方法有： 
+getName():String：获得该类型的全称名称。 
+getSuperClass():Class：获得该类型的直接父类，如果该类型没有直接父类，那么返回null。 
+getInterfaces():Class[]：获得该类型实现的所有接口。 
+isArray():boolean：判断该类型是否是数组。 
+isEnum():boolean：判断该类型是否是枚举类型。 
+isInterface():boolean：判断该类型是否是接口。 
+isPrimitive():boolean：判断该类型是否是基本类型，即是否是int，boolean，double等等。 
+isAssignableFrom(Class cls):boolean：判断这个类型是否是类型cls的父（祖先）类或父（祖先）接口。 
+getComponentType():Class：如果该类型是一个数组，那么返回该数组的组件类型。 
+此外还可以进行类型转换这类的操作，主要方法有： 
+asSubclass(Class clazz):Class：将这个类型 转换成clazz的类类型
+ */
