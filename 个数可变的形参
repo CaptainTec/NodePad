@@ -1,0 +1,25 @@
+package selfLearning;
+
+//个数可变的形参
+public class Varargs {
+	public static void test(int a, String... books)
+	{
+		for(String temp : books)
+		{
+			System.out.println(temp);
+		}
+		System.out.println(a);
+	}
+	
+	public static void main(String[] args)
+	{
+		test(666, new String[] {"123", "456", "789"});//个数可变的形参也可以传进来一个数组
+	}
+}
+/*
+输出
+123
+456
+789
+666
+*/
