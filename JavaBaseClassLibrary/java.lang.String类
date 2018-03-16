@@ -1,0 +1,60 @@
+package JavaBaseClassLibrary;
+//String类 重载了超多的构造器!!!
+
+public class StringTest {
+	public static void main(String[] args)
+	{
+		String str1 = new String("Awesome");
+		String str2 = new String("Awesome");
+		System.out.println(str1 == str2);//返回false
+		
+		//常量池下会被重用
+		String str3 = "Fantastic";
+		String str4 = "Fantastic";
+		String str5 = "Awesome";
+		System.out.println(str3 == str4);//true
+		System.out.println(str5 == str1);
+		
+		char[] value = {'a','b','c','d','e','f','g'};
+		//String构造器，将制定的字符数组从offset开始、长度为count的字符元素连缀成字符串!!!
+		System.out.println(new String(value,1,5));//bcdef
+		System.out.println(new String(value));//abcdefg
+		//效果等价的静态方法static String copyValueOf(char[] data)
+		System.out.println(String.copyValueOf(value));//abcdefg
+		
+		StringBuffer strb = new StringBuffer("zhangze我泽哥...");
+		//String构造器，根据StringBuffer对象来创建对应的String对象
+		System.out.println(new String(strb));
+		
+		StringBuilder strbi = new StringBuilder("zhangze大佬");
+		//String构造器，根据StringBuilder对象来创建对应的String对象
+		System.out.println(new String(strbi));
+		
+		//String方法
+		//非静态方法char charAt(int index) 获取字符串中指定位置的字符
+		System.out.println(new String("abc").charAt(1) + "---charAt()方法输出字符串指定位置下标的字符");//返回b
+		
+		System.out.println(new String("字符串拼接，等价于+号").concat("--把后面这段跟前面的拼接在一起"));//String concat(String str)
+		
+		//String对象与StringBuffer对象比较，当其内容一样时返回true
+		System.out.println(new String("zhangze我泽哥...").contentEquals(strb));
+		
+		System.out.println(new String("ab").getBytes());//字节数组用于底层通信!!!
+		
+		//char[] toCharArray() 将该String对象转换成char数组
+		char[] key = new String("dengxingwang").toCharArray();
+		for(char a : key)
+			System.out.print(a + " ");
+		System.out.println();//换行
+		for(int i=0; i<key.length; ++i)
+			System.out.print(key[i] + " ");
+		System.out.println();//换行
+		
+		//static String valueOf(X x) 将基本类型转换为String对象的方法
+		System.out.println(String.valueOf((int)123));
+		System.out.println(String.valueOf((Long)123456L));
+		System.out.println(String.valueOf((double)3.1415926));
+		boolean temp = false;
+		System.out.println(String.valueOf(temp));
+	}
+}
