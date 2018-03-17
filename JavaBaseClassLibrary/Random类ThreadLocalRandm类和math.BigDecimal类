@@ -19,7 +19,10 @@ public class RandomTest {
 		System.out.println(rr2.nextDouble());//这两行输出的结果相同
 		System.out.println(rr1.nextGaussian());
 		System.out.println(rr2.nextGaussian());//生成伪高斯数(种子相同，结果相同)
-		//为了防止
+		//为了防止种子相同，可以使用当前时间作为Random对象的种子
+		Random nowTime = new Random(System.currentTimeMillis());
+		System.out.println("now Time : " + nowTime.nextDouble());
+		
 		
 		ThreadLocalRandom randd = ThreadLocalRandom.current();//线程安全性
 		System.out.println(randd.nextInt(1,100));//1-100之间的随机数
