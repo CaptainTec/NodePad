@@ -1,0 +1,65 @@
+package JavaBaseClassLibrary;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+//Java提供了Pattern 和 Matcher 两个类专门提供对正则表达式的支持!!!
+public class RegularExpressionTest {
+	
+	public static void main(String[] args)
+	{
+		//将一个字符串编译成Pattern对象
+		Pattern pat = Pattern.compile("a*b");
+		//使用Pattern对象创建Matcher对象
+		Matcher mm = pat.matcher("aaaaaaaaaaaaaaab");
+		boolean b = mm.matches();
+		System.out.println(b);//true
+		System.out.println(pat.matcher("jinyuzhen").matches());//false
+		
+		Pattern key = Pattern.compile("[jd].*n.*n.*");//以jd开头
+		System.out.println(key.matcher("jinyuzhen").matches());
+		System.out.println(key.matcher("dengxingwang").matches());
+		System.out.println(key.matcher("dongyanlin").matches());
+		
+		Matcher jin = key.matcher("...jinyuzhen");
+		Matcher deng = key.matcher("dengxingwang");
+		Matcher dong = key.matcher("dongyanlin");
+		System.out.println("----------------------");
+		System.out.println(jin.find());//true 返回目标字符中是否包含于Pattern匹配的字符串
+		System.out.println(jin.group());//返回上一次于Pattern匹配的子串
+		
+		String number = "13854026278--13954063058-17317595455...";
+		Matcher tell = Pattern.compile("(13|17)\\d{9}").matcher(number);//匹配13或17开头的手机号
+		while(tell.find())
+			System.out.println(tell.group());
+		
+		//start() 和 end() 方法主要用于确定子串在目标字符串中的位置
+		System.out.println("------------------");
+		String girls = "Jinyuzhen Dengxingwang Dongyanlin...Zhanghan";
+		System.out.println("The original string is : " + girls);
+		Matcher m = Pattern.compile("\\w+").matcher(girls);
+		while(m.find())
+			System.out.println(m.group() + "子串起始位置: " + m.start() + ", 子串结束位置 : " + m.end());
+		
+	}
+}
+/**
+true
+false
+true
+true
+true
+----------------------
+true
+jinyuzhen
+13854026278
+13954063058
+17317595455
+------------------
+The original string is : Jinyuzhen Dengxingwang Dongyanlin...Zhanghan
+Jinyuzhen子串起始位置: 0, 子串结束位置 : 9
+Dengxingwang子串起始位置: 10, 子串结束位置 : 22
+Dongyanlin子串起始位置: 23, 子串结束位置 : 33
+Zhanghan子串起始位置: 36, 子串结束位置 : 44
+
+ */
