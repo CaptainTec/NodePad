@@ -1,0 +1,126 @@
+package JavaBaseClassLibrary;
+
+import java.awt.List;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.PriorityQueue;
+import java.util.TreeSet;
+
+public class LinkedHashSetTest {
+	
+	public static void main(String[] args)
+	{
+		LinkedHashSet girls = new LinkedHashSet();
+		girls.add("Jinyuzhen");
+		girls.add("Dengxingwang");
+		girls.add("Chenranran");
+		Iterator it = girls.iterator();
+		while(it.hasNext())
+			System.out.println(it.next());
+		System.out.println("------------------");
+		girls.remove("Jinyuzhen");
+		girls.add("Jinyuzhen");
+		it = girls.iterator();
+		while(it.hasNext())
+			System.out.println(it.next());
+		
+		System.out.println("-------------------");
+		//下面测试TreeSet类
+		TreeSet nums = new TreeSet();
+		nums.add(1);
+		nums.add(3);
+		nums.add(5);
+		nums.add(4);
+		nums.add(2);
+		nums.add(-8);
+		nums.add(10);
+		nums.add(0);
+		nums.add(2);
+		nums.add(2);//插入失败，TreeSet里也没有重复的元素!!!
+		System.out.println(nums);//已经由小到大排好序了
+		System.out.println(nums.first());
+		System.out.println(nums.last());
+		System.out.println(nums.headSet(4));//返回小于4的子集，不包括4
+		System.out.println(nums.tailSet(2));//返回大于等于2的子集
+		System.out.println(nums.subSet(2, 4));
+		
+		System.out.println("################ArrayList");
+		Collection cc = new HashSet();
+		cc.add("aaaa");
+		cc.add("bbbb");
+		ArrayList person = new ArrayList();
+		person.add("Treelet");
+		person.add(0,"Tlet");
+		person.addAll(0, cc);
+//		person.addAll(10, cc);//下标要在有效索引范围内
+		person.addAll(cc);
+		System.out.println(person);
+		person.set(0, cc);
+		System.out.println(person);
+		System.out.println(person.subList(0, 2));//输出前两个元素
+		System.out.println(person.indexOf("Tlet"));//返回对应的索引下标
+		
+		System.out.println("Queue-------------------Queue");
+		//Queue集合
+		//1）优先队列PriorotyQueue实现类--按元素的大小排序,违反了队列先进先出的规则
+		PriorityQueue pq = new PriorityQueue();
+		pq.offer(6);
+		pq.offer(-2);
+		pq.offer(3);
+		pq.offer(6);
+		pq.offer(6);//允许有重复元素哟!!!
+		pq.offer(5);
+		pq.offer(0);
+		pq.offer(10);
+		System.out.println(pq);//按非原始序列呈现，但调用peek() 和 poll()方法取出元素时,取出的是最小的元素!!!
+		System.out.println(pq.peek());//取出头部元素，但不删除该元素，若队列为空，返回null
+		System.out.println(pq.poll());//取出头部元素，并且删除该元素，若队列为空，返回null
+		System.out.println(pq.poll());//取出头部元素，并且删除该元素，若队列为空，返回null
+		System.out.println(pq.poll());//取出头部元素，并且删除该元素，若队列为空，返回null
+		System.out.println(pq.poll());//取出头部元素，并且删除该元素，若队列为空，返回null
+		System.out.println(pq.poll());//取出头部元素，并且删除该元素，若队列为空，返回null
+		System.out.println(pq.poll());//取出头部元素，并且删除该元素，若队列为空，返回null
+		System.out.println(pq.poll());//取出头部元素，并且删除该元素，若队列为空，返回null
+		System.out.println(pq.poll());//取出头部元素，并且删除该元素，若队列为空，返回null
+		System.out.println(pq.poll());//取出头部元素，并且删除该元素，若队列为空，返回null
+		
+		//(双端队列)Deque接口(Queue接口的子接口) 和 ArrayDeque实现类
+		ArrayDeque stack = new ArrayDeque();
+		stack.push("Jinyuzhen");
+		stack.push("Zhangze");
+		stack.push("Xuhanyu");
+		stack.push("Dengxingwang");
+		stack.push("Dongyanlin");
+		System.out.println(stack);//输出双端队列里的元素
+		stack.addFirst("addFirst");//加头
+		stack.addLast("addLast");//加尾
+		System.out.println(stack);
+		System.out.println(stack.getFirst());//获取双端队列的第一个元素，但不删除
+		System.out.println(stack.getLast());//获取最后一个元素，但不删除
+		stack.offer("头还是尾？？？");
+		stack.offerFirst("offerFirst");
+		stack.offerLast("offerLast");
+		System.out.println(stack);
+		System.out.println(stack.peek() + " --- just peek!!!");//获取第一个元素，但不删除
+		System.out.println(stack.peekFirst());//获取第一个元素，但不删除
+		System.out.println(stack.peekLast());//获取最后一个元素，但不删除
+		
+		System.out.println(stack.pollFirst());//获取第一个元素，并删除
+		System.out.println(stack.pollLast());//获取最后一个元素，并删除
+		System.out.println(stack);
+		
+		stack.push("push进来放栈顶");//相当于addFirst()
+		System.out.println(stack);
+		System.out.println(stack.pop());//删除栈顶元素
+		
+		System.out.println(stack.removeFirst());//获取并删除第一个元素--pollFirst()
+		System.out.println(stack.removeLast());//获取并删除最后一个元素--pollLast()
+		
+		
+	}
+}
