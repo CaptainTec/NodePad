@@ -1,0 +1,27 @@
+package JavaBaseClassLibrary;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MapTest {
+	
+	public static void main(String[] args)
+	{
+		Map  map = new HashMap();
+		map.put("Jinyuzhen", "girl");
+		map.put("Dengxingwang", "girl");
+		map.put("mybrotherze", "boy");
+		System.out.println(map.put("Jinyuzhen", "beautifulGirl"));
+		System.out.println(map);
+		
+		System.out.println("是否含有值为Dengxingwang的key : " + map.containsKey("Dengxingwang"));
+		System.out.println("是否含有vlaue值为girl的value : " + map.containsValue("girl"));
+		
+		System.out.println(map.keySet());//返回该Map中所有key组成的集合
+		for(Object key : map.keySet())
+			System.out.println(key + "-->" + map.get(key));
+		map.remove("Dengxingwang");//删除指定key对应的key-value对
+		System.out.println(map);
+		System.out.println(map.size());//返回该Map中key-value对的个数
+	}
+}
