@@ -1,0 +1,34 @@
+package JavaBaseClassLibrary;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.lang.model.element.Element;
+
+public class GenericTest {
+	
+	public static void main(String[] args)
+	{
+		ArrayList<String> girls = new ArrayList<>();
+		girls.add("Jinyuzhen");
+		girls.add("Dengxingwang");
+		girls.add("Hanletlet");
+		girls.forEach(e -> System.out.print(e.length() + " "));
+		System.out.println();//换行
+		girls.forEach(e -> System.out.print(e + " "));
+		System.out.println();//换行
+		
+		Map<String , ArrayList<String>> baby = new HashMap<>();
+		baby.put("Meng", girls);
+		baby.forEach((key, value) -> System.out.println(key + "-->" + value));
+		
+		
+		ArrayList<String> aaa = new ArrayList<>();
+		ArrayList<Integer> bbb= new ArrayList<>();
+		System.out.println(aaa.getClass()==bbb.getClass());
+		//返回true，不管泛型的实际参数是什么，他们在运行时总是同样的类(class)，即系统只创建一个class文件!!!在内存中也只占用一块内存空间
+		
+	}
+	
+}
