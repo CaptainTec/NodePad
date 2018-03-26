@@ -1,0 +1,24 @@
+package JavaBaseClassLibrary;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class ThrowsTest
+{
+	
+	public static void main(String[] args) //throws Exception//或者在这里自行抛出，或者用下面的try...catch捕捉
+	{
+		try
+		{
+			ttest();
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+		}
+	}
+	public static void ttest() throws IOException
+	{
+		FileInputStream ff = new FileInputStream("a.txt");
+	}
+}
