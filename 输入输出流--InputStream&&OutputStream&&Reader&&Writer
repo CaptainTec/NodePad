@@ -1,0 +1,54 @@
+package InputOutputStream;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class FileInputStreamTest {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		//创建字节输入流
+		FileInputStream fis = new FileInputStream(
+				"E:\\PAT\\eclipsePj\\Hello\\src\\InputOutputStream\\FileInputStreamTest.java");
+		//创建字符输入流
+		FileReader fs = new FileReader(
+				"E:\\PAT\\eclipsePj\\Hello\\src\\InputOutputStream\\FileInputStreamTest.java");
+		
+		byte[] buffer = new byte[1024*2];//创建一个长度为1024的“竹筒”
+		char[] buff = new char[1024*16];//创建一个长度为1024的“竹筒”
+		
+		int cnt = 0;
+		int hasRead = 0;
+		while((hasRead = fs.read(buff)) > 0)
+		{
+			System.out.println(new String(buff, 0, hasRead));
+			System.out.println("#######" + ++cnt + "#######");
+		}
+		
+		while((hasRead = fis.read(buffer)) > 0)
+		{
+			System.out.println(new String(buffer, 0, hasRead));
+			System.out.println("#######" + ++cnt + "#######");
+		}
+		
+		//输入输出流搭配，可以实现复制文件的操作!!!
+		FileInputStream ff = new FileInputStream(
+				"E:\\PAT\\eclipsePj\\Hello\\src\\InputOutputStream\\FileInputStreamTest.java");
+		FileOutputStream fos = new FileOutputStream(
+				"E:\\PAT\\eclipsePj\\Hello\\src\\InputOutputStream\\copy.txt");//fos是输出流
+		byte[] buf = new byte[1024*2];
+		int key = 0;
+		while((key = ff.read(buf)) > 0)
+		{
+			fos.write(buf, 0, key);
+			System.out.println(new String(buf, 0, key));
+			System.out.println("#######" + ++cnt + "#######");
+		}
+		fs.close();
+		
+	}
+
+}
