@@ -1,0 +1,82 @@
+package InputOutputStream;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+class Person implements java.io.Serializable
+{
+	/**
+	 * 解决版本不兼容的问题
+	 */
+	private static final long serialVersionUID = 1L;
+	private String name;
+	private transient int age;//transient将此实例变量值隐藏起来，Java序列化时无需理会该变量
+	
+	public Person(String name, int age)
+	{
+		System.out.println("有参数的构造器!!!");
+		this.name = name;
+		this.age = age;
+	}
+	//省略name与age的setter 方法
+	void setName(String name)
+	{
+		this.name = name;
+	}
+	String getName()
+	{
+		return this.name;
+	}
+	int getAge()
+	{
+		return this.age;
+	}
+}
+public class subObjectTest {
+
+	public static void main(String[] args)
+	{
+		// TODO Auto-generated method stub
+		try( ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(
+				"E:\\PAT\\eclipsePj\\Hello\\src\\InputOutputStream\\object.txt")) )
+		{
+			Person per = new Person("sunwokong", 500);
+			oos.writeObject(per);//将一个Person对象写入磁盘文件
+			per.setName("二师兄");
+			oos.writeObject(per);//实际上序列化编号未改变，输出的还是 sunwokong，但per对象里的name已改变成 二师兄
+			
+			Person per2 = new Person("TangSanZang", 500);
+			oos.writeObject(per2);//将另一个Person对象写入磁盘文件
+			oos.writeObject(per2);//将另一个Person对象写入磁盘文件，以下全是引用
+			oos.writeObject(per2);//将另一个Person对象写入磁盘文件
+			oos.writeObject(per2);//将另一个Person对象写入磁盘文件
+			oos.writeObject(per2);//将另一个Person对象写入磁盘文件
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		
+		try( ObjectInputStream ois = new ObjectInputStream(new FileInputStream(
+				"E:\\PAT\\eclipsePj\\Hello\\src\\InputOutputStream\\object.txt")) )
+		{
+			Person pp = (Person)ois.readObject();//读取第一个对象
+			System.out.println("名字为 : " + pp.getName() + "\n年龄为 : " + pp.getAge());
+			
+			Person pp2 = (Person)ois.readObject();//读取第二个对象
+			System.out.println("名字为 : " + pp2.getName() + "\n年龄为 : " + pp2.getAge());
+			
+			Person pp3 = (Person)ois.readObject();//读取第三个对象
+			System.out.println("名字为 : " + pp3.getName() + "\n年龄为 : " + pp3.getAge());
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+	}
+
+}
